@@ -1,6 +1,7 @@
 package com.devsuperior.dscatalog.resources;
 
 import com.devsuperior.dscatalog.dto.UserDTO;
+import com.devsuperior.dscatalog.dto.UserInsertDTO;
 import com.devsuperior.dscatalog.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -30,11 +31,11 @@ public class UserResource {
     }
 
     @PostMapping
-    public ResponseEntity<UserDTO> insert(@RequestBody UserDTO dto) {
-        dto = service.insert(dto);
+    public ResponseEntity<UserDTO> insert(@RequestBody UserInsertDTO dto) {
+        UserDTO newDto = service.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/users")
-                .buildAndExpand(dto.getId()).toUri();
-        return ResponseEntity.created(uri).body(dto);
+                .buildAndExpand(newDto.getId()).toUri();
+        return ResponseEntity.created(uri).body(newDto);
     }
 
     @PutMapping("/{id}")
