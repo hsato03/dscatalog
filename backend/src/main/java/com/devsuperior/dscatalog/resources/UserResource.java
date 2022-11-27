@@ -40,12 +40,12 @@ public class UserResource {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDTO> udpate(@PathVariable Long id, @RequestBody UserDTO dto) {
+    public ResponseEntity<UserDTO> udpate(@PathVariable Long id,@Valid @RequestBody UserDTO dto) {
         return ResponseEntity.ok().body(service.update(id, dto));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@Valid @PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
