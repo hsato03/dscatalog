@@ -66,6 +66,7 @@ public class UserService implements UserDetailsService {
             User obj = repository.getReferenceById(id);
             copyDtoToEntity(dto, obj);
             obj = repository.save(obj);
+
             return new UserDTO(obj);
         } catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException("Id not found: " + id);
