@@ -1,6 +1,7 @@
 package com.devsuperior.dscatalog.resources;
 
 import com.devsuperior.dscatalog.dto.ProductDTO;
+import com.devsuperior.dscatalog.repositories.CategoryRepository;
 import com.devsuperior.dscatalog.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,9 +20,15 @@ public class ProductResource {
     @Autowired
     private ProductService service;
 
+    @Autowired
+    private CategoryRepository categoryRepository;
+
     @GetMapping
-    public ResponseEntity<Page<ProductDTO>> findAllPaged(Pageable pageable) {
-        Page<ProductDTO> list = service.findAllPaged(pageable);
+    public ResponseEntity<Page<ProductDTO>> findAllPaged(
+            Pageable pageable,
+            @RequestParam(value = "categoryId", defaultValue = "0") Long categoryId,
+            @RequestParam(value = "name", defaultValue = "") String name) {
+        Page<ProductDTO> list = service.findAllPaged(categoryId, name.trim(), pageable);
         return ResponseEntity.ok().body(list);
     }
 
